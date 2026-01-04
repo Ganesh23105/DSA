@@ -8,7 +8,7 @@ class Solution {
             if(nums[index]<0){
                 continue;
             }
-            nums[index]=nums[index]*-1;
+            nums[index]*=-1;
         }
 
         for(int i=0;i<n;i++){
