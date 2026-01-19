@@ -6,9 +6,12 @@ class Solution {
         return gcd(b,a%b);
     }
     public int findGCD(int[] nums) {
-        Arrays.sort(nums);
-        int n=nums[0];
-        int r=nums[nums.length-1];
-        return gcd(n,r);
+        int min=nums[0];
+        int max=nums[0];
+        for(int i=0;i<nums.length;i++){
+            min=Math.min(min,nums[i]);
+            max=Math.max(max,nums[i]);
+        }
+        return gcd(min,max);
     }
 }
