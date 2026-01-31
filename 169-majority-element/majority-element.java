@@ -16,7 +16,7 @@ class Solution {
         for(int x:nums){
             result.put(x,result.getOrDefault(x,0)+1);
 
-            if(result.get(x)>maxcount){
+            if(result.get(x)>maxcount && result.get(x)>nums.length/2){
                 maxcount=result.get(x);
                 majority=x;
             }
