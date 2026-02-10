@@ -5,10 +5,11 @@ class Solution {
 
         for(int i=1;i<nums.length;i++){
             if(nums[i]<nums[i-1]){
-                decreasing=false;
+                increasing=false;
+                
             }
             if(nums[i] > nums[i-1]){
-                increasing=false;
+                decreasing=false;
             }
         }
         return increasing||decreasing;
