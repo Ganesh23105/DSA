@@ -1,0 +1,42 @@
+class Solution {
+    public int minSwaps(int[][] grid) {
+        int n = grid.length;
+        int[] zeros = new int[n];
+
+        // Step 1: count trailing zeros
+        for (int i = 0; i < n; i++) {
+            int count = 0;
+            for (int j = n - 1; j >= 0; j--) {
+                if (grid[i][j] == 0) count++;
+                else break;
+            }
+            zeros[i] = count;
+        }
+
+        int swaps = 0;
+
+        // Step 2: greedy arrangement
+        for (int i = 0; i < n; i++) {
+            int needed = n - i - 1;
+            int j = i;
+
+            // find row with enough trailing zeros
+            while (j < n && zeros[j] < needed) {
+                j++;
+            }
+
+            if (j == n) return -1;  // not possible
+
+            // bring row up using swaps
+            while (j > i) {
+                int temp = zeros[j];
+                zeros[j] = zeros[j - 1];
+                zeros[j - 1] = temp;
+                swaps++;
+                j--;
+            }
+        }
+
+        return swaps;
+    }
+}
