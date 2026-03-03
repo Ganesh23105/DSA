@@ -3,19 +3,17 @@ class Solution {
         StringBuilder result=new StringBuilder();
         int balance=0;
         for(int i=0;i<s.length();i++){
-            if(s.charAt(i)=='(' && balance==0){
+            if(s.charAt(i)=='('){
+                if(balance>0){
+                    result.append(s.charAt(i));
+                }
                 balance++;
             }
-            else if(s.charAt(i)==')' && balance-1==0){
+            else if(s.charAt(i)==')'){
                 balance--;
-            }
-            else if (s.charAt(i)=='('){
-                result.append(s.charAt(i));
-                balance++;
-            }
-            else if (s.charAt(i)==')'){
-                result.append(s.charAt(i));
-                balance--;
+                if(balance>0){
+                    result.append(s.charAt(i));
+                }
             }
         }
         return result.toString();
