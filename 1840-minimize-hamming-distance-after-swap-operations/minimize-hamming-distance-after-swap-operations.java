@@ -1,0 +1,71 @@
+import java.util.*;
+
+class Solution {
+
+
+    class DSU {
+        int[] parent;
+
+        DSU(int n) {
+            parent = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        void union(int x, int y) {
+            int px = find(x);
+            int py = find(y);
+            if (px != py) {
+                parent[py] = px;
+            }
+        }
+    }
+
+    public int minimumHammingDistance(int[] source, int[] target, int[][] allowedSwaps) {
+        int n = source.length;
+
+        DSU dsu = new DSU(n);
+
+        for (int[] swap : allowedSwaps) {
+            dsu.union(swap[0], swap[1]);
+        }
+
+        Map<Integer, List<Integer>> groups = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            int parent = dsu.find(i);
+            groups.computeIfAbsent(parent, k -> new ArrayList<>()).add(i);
+        }
+
+        int hammingDistance = 0;
+
+        for (List<Integer> group : groups.values()) {
+
+            Map<Integer, Integer> freq = new HashMap<>();
+
+            for (int idx : group) {
+                freq.put(source[idx], freq.getOrDefault(source[idx], 0) + 1);
+            }
+
+            for (int idx : group) {
+                int val = target[idx];
+
+                if (freq.getOrDefault(val, 0) > 0) {
+                    freq.put(val, freq.get(val) - 1);
+                } else {
+                    hammingDistance++;
+                }
+            }
+        }
+
+        return hammingDistance;
+    }
+}
